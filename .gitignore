@@ -1,0 +1,10 @@
+/booking-service/bin
+/booking-service/obj
+/inventory-service/bin
+/inventory-service/obj
+/notification-service/obj
+/notification-service/bin
+/payment-service/obj
+/payment-service/bin
+/volume
+/.vs

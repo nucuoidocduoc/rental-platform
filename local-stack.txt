@@ -1,0 +1,40 @@
+﻿# Tao queue rental-queue tren localstack
+aws --endpoint-url=http://localhost:4566 \
+	--region ap-southeast-1 \
+	sqs create-queue \
+	--queue-name booking
+
+
+# Xem message tren localstack
+    aws --endpoint-url=http://localhost:4566 \
+        --region ap-southeast-1 \
+        sqs receive-message \
+        --queue-url http://localhost:4566/000000000000/property \
+        --max-number-of-messages 10
+
+# Send message tới queue
+	aws --endpoint-url=http://localhost:4566 \
+		--region ap-southeast-1 \
+		sqs send-message \
+		--queue-url http://sqs.ap-southeast-1.localstack.cloud:4566/000000000000/rental-queue \
+		--message-body '{"rentalId": "12345", "customerId": "67890"}'
+
+# Tao table dynamoDb tren localstack
+aws --endpoint-url=http://localhost:4566 \
+	--region ap-southeast-1 \
+	dynamodb create-table \
+	--table-name BookingEvents \
+	--attribute-definitions AttributeName=AggregateId,AttributeType=S AttributeName=Version,AttributeType=N\
+	--key-schema AttributeName=AggregateId,KeyType=HASH AttributeName=Version,KeyType=RANGE \
+	--provisioned-throughput ReadCapacityUnits=5,WriteCapacityUnits=5
+
+
+# Adding a comment here for anyone that experiences this problem in the future again, because the LF change was not enough for me.
+
+Your file needs to have the following configuration:
+
+1.) #!/bin/bash at the start
+2.) LF line ending
+3.) UTF-8 (not e.g. UTF-8 BOM format)
+
+2 and 3 should be easily confirmable and changed by either notepad++ or vs code - don't forget to save the file.

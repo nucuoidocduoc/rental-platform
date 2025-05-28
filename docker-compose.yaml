@@ -1,0 +1,67 @@
+services:
+  localstack:
+    container_name: "localstack-main"
+    image: localstack/localstack
+    ports:
+      - "127.0.0.1:4566:4566" # LocalStack Gateway
+      - "127.0.0.1:4510-4559:4510-4559" # external services port range
+    environment:
+      - DEBUG=${DEBUG:-0}
+      - SERVICES=sqs,dynamodb
+      - DEFAULT_REGION=ap-southeast-1
+    volumes:
+      - "./init-aws.sh:/etc/localstack/init/ready.d/init-aws.sh"
+      - "${LOCALSTACK_VOLUME_DIR:-./volume}:/var/lib/localstack"
+      - "/var/run/docker.sock:/var/run/docker.sock"
+    networks:
+      - rental-platform
+  booking:
+    build:
+      context: ./booking-service
+      dockerfile: Dockerfile
+    container_name: "booking-service"
+    ports:
+      - "5000:8080"
+    depends_on:
+      - "localstack"
+    networks:
+      - rental-platform
+
+  inventory:
+    build:
+      context: ./inventory-service
+      dockerfile: Dockerfile
+    container_name: "inventory-service"
+    ports:
+      - "5001:8080"
+    depends_on:
+      - "localstack"
+    networks:
+      - rental-platform
+
+  payment:
+    build:
+      context: ./payment-service
+      dockerfile: Dockerfile
+    container_name: payment-service
+    ports:
+      - "5002:80"
+    networks:
+      - rental-platform
+  ui:
+    build:
+      context: ./ui
+      dockerfile: Dockerfile
+    container_name: "rental-ui"
+    ports:
+      - "3000:80"
+    depends_on:
+      - "booking"
+      - "inventory"
+      - "payment"
+    networks:
+      - rental-platform
+
+networks:
+  rental-platform:
+    driver: bridge
