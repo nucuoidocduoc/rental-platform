@@ -59,6 +59,7 @@ else
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
+app.UsePathBase("/payment");
 
 app.MapGet("/", () => "Payment Service");
 

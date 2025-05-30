@@ -14,8 +14,6 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "development", "development", "{E7A55ADF-C204-46A9-92EF-05EEBB367F5D}"
 	ProjectSection(SolutionItems) = preProject
 		docker-compose.yaml = docker-compose.yaml
-		init-aws.sh = init-aws.sh
-		local-stack.txt = local-stack.txt
 	EndProjectSection
 EndProject
 Global

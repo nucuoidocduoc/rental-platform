@@ -10,7 +10,7 @@ const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 export const fetchProperties = async () => {
   try {
     // Simulate API delay
-    const response = await fetch("/api/properties", {
+    const response = await fetch("/inventory/api/properties", {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -31,7 +31,7 @@ export const fetchProperties = async () => {
 // Fetch a single property by ID
 export const fetchPropertyById = async (id) => {
   try {
-    const response = await fetch("/api/properties", {
+    const response = await fetch("/inventory/api/properties", {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -61,7 +61,7 @@ export const fetchPropertyById = async (id) => {
 export const createBooking = async (bookingData) => {
   try {
     // Simulate API delay
-    const response = await fetch("/api/booking", {
+    const response = await fetch("/booking/api/booking", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -108,7 +108,7 @@ export const getPaymentDetails = async (bookingId) => {
 export const processPayment = async (paymentData) => {
   try {
     const response = await fetch(
-      "/api/payments/callback/" + paymentData.bookingId,
+      "/payment/api/payments/callback/" + paymentData.bookingId,
       {
         method: "POST",
         headers: {

@@ -60,7 +60,7 @@ else
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
-
+app.UsePathBase("/inventory");
 app.MapGet("/", () => "Inventory Service");
 
 app.UseRouting();

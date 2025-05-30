@@ -66,7 +66,7 @@ else
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
-
+app.UsePathBase("/booking");
 app.MapGet("/", () => "Booking Service");
 
 app.UseRouting();
