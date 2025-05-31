@@ -30,6 +30,7 @@ namespace booking_service.Infrastructure.Messaging
 
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
+            Console.WriteLine(JsonSerializer.Serialize(_sqsSetting));
             var queue = _sqsSetting.ConsumeQueues.FirstOrDefault(q => q.QueueName == "booking");
             if (queue == null)
             {
@@ -45,7 +46,7 @@ namespace booking_service.Infrastructure.Messaging
                         MaxNumberOfMessages = 10,
                         WaitTimeSeconds = 5 // Long polling
                     };
-
+                    Console.WriteLine(queue.QueueUrl);
                     var response = await _sqsClient.ReceiveMessageAsync(receiveMessageRequest, stoppingToken);
                     if (response?.Messages == null || response.Messages.Count == 0)
                     {

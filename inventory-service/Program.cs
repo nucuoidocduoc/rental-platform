@@ -16,7 +16,7 @@ builder.Services.AddSingleton<IEventStore, EventRepository>();
 builder.Services.AddHostedService<SqsConsumerService>();
 builder.Services.AddHttpClient();
 builder.Services.Configure<AppSettings>(builder.Configuration);
-builder.Configuration.AddJsonFile("/app/appsettings.json", optional: true, reloadOnChange: true);
+builder.Configuration.AddJsonFile("/app/config/appsettings.json", optional: true, reloadOnChange: true);
 #region aws services
 
 var awsOptions = builder.Configuration.GetAWSOptions();
